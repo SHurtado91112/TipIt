@@ -21,6 +21,7 @@ class TipViewController: UIViewController
     
     func dismissKeyboard()
     {
+        billTextField.resignFirstResponder()
         self.view.endEditing(true)
     }
     
@@ -50,13 +51,19 @@ class TipViewController: UIViewController
             gradientLayer.frame = self.view.bounds
             self.view.layer.insertSublayer(gradientLayer, at: 0)
         
-        //set text field with default currency identifier
-            billTextField.placeholder = Currency.getIdentifier()
-        
         //tap dismisses number pad
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TipViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TipViewController.dismissKeyboard))
+            tap.cancelsTouchesInView = false
+            self.view.addGestureRecognizer(tap)
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
+        //set text field with default currency identifier
+            billTextField.resignFirstResponder()
+            billTextField.becomeFirstResponder()
+            billTextField.placeholder = Currency.getIdentifier()
+
     }
 
     override func didReceiveMemoryWarning()
