@@ -49,7 +49,6 @@ class TipViewController: UIViewController
     @IBOutlet weak var totalAmountLabel: UILabel!
     
     @IBOutlet weak var splitView: UIView!
-    
     @IBOutlet weak var splitNumLabel: UILabel!
     @IBOutlet weak var splitTotalLabel: UILabel!
     var split = false
@@ -61,6 +60,7 @@ class TipViewController: UIViewController
         
         //user default values
             let defaultGratuity = 15
+            splitView.alpha = 0
         
         //nav bar font and text color
             self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: (95/255.0), green: (198/255.0), blue: (97/255.0), alpha: 1), NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
@@ -124,10 +124,10 @@ class TipViewController: UIViewController
         {
             let tip = (userValue)! * Double(perc) * 0.01
             
-            tipAmountLabel.text = "\(Currency.getIdentifier())\(tip)"
+            tipAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", tip))"
             
             let total = (userValue)! + tip
-            totalAmountLabel.text = "\(Currency.getIdentifier())\(total)"
+            totalAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", total))"
             
             if(split)
             {
@@ -135,9 +135,16 @@ class TipViewController: UIViewController
                 
                 let splitTotal = total/splitNum!
                 
-                splitTotalLabel.text = "\(Currency.getIdentifier())\(splitTotal)"
+                splitTotalLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", splitTotal))"
             }
-
+        }
+        else
+        {
+            tipAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", 0))"
+            
+            totalAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", 0))"
+            
+            splitTotalLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", 0))"
         }
     }
 
@@ -168,7 +175,7 @@ class TipViewController: UIViewController
     
     @IBAction func stepChanged(_ sender: Any)
     {
-        splitNumLabel.text = "\(stepper.value)"
+        splitNumLabel.text = "\(Int(stepper.value))"
     }
     override func didReceiveMemoryWarning()
     {
