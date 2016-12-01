@@ -8,6 +8,7 @@
 
 import UIKit
 import HGCircularSlider
+import Foundation
 
 class TipViewController: UIViewController
 {
@@ -27,6 +28,7 @@ class TipViewController: UIViewController
     }
     
     var timer = Timer()
+    var perc = 0
     
     @IBOutlet weak var billTextField: UITextField!
     @IBOutlet weak var slider: CircularSlider!
@@ -59,6 +61,7 @@ class TipViewController: UIViewController
             slider.endPointValue = CGFloat(defaultGratuity)
         
         //update tip label
+            percentLabel.textColor = UIColor.white
             timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updateTip), userInfo: nil, repeats: true)
     }
     
@@ -89,7 +92,9 @@ class TipViewController: UIViewController
     
     func updateTip()
     {
-        percentLabel.text = "\(slider.endPointValue)%"
+        perc = Int(round(slider.endPointValue))
+        
+        percentLabel.text = "\(perc)%"
     }
 
     override func didReceiveMemoryWarning()
