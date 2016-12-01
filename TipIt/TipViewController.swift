@@ -10,6 +10,15 @@ import UIKit
 import HGCircularSlider
 import Foundation
 
+extension Double
+{
+    /// Rounds the double to decimal places value
+    func roundTo(places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
+
 class TipViewController: UIViewController
 {
     
@@ -31,8 +40,20 @@ class TipViewController: UIViewController
     var perc = 0
     
     @IBOutlet weak var billTextField: UITextField!
+    @IBOutlet weak var splitBtn: UIButton!
     @IBOutlet weak var slider: CircularSlider!
+    @IBOutlet weak var stepper: UIStepper!
+    
     @IBOutlet weak var percentLabel: UILabel!
+    @IBOutlet weak var tipAmountLabel: UILabel!
+    @IBOutlet weak var totalAmountLabel: UILabel!
+    
+    @IBOutlet weak var splitView: UIView!
+    
+    @IBOutlet weak var splitNumLabel: UILabel!
+    @IBOutlet weak var splitTotalLabel: UILabel!
+    var split = false
+    
     
     override func viewDidLoad()
     {
@@ -92,11 +113,63 @@ class TipViewController: UIViewController
     
     func updateTip()
     {
+        var userValue = Double(billTextField.text!)
+        userValue = userValue?.roundTo(places: 2)
+        
         perc = Int(round(slider.endPointValue))
         
         percentLabel.text = "\(perc)%"
+        
+        if(userValue != nil)
+        {
+            let tip = (userValue)! * Double(perc) * 0.01
+            
+            tipAmountLabel.text = "\(Currency.getIdentifier())\(tip)"
+            
+            let total = (userValue)! + tip
+            totalAmountLabel.text = "\(Currency.getIdentifier())\(total)"
+            
+            if(split)
+            {
+                let splitNum = Double(splitNumLabel.text!)
+                
+                let splitTotal = total/splitNum!
+                
+                splitTotalLabel.text = "\(Currency.getIdentifier())\(splitTotal)"
+            }
+
+        }
     }
 
+    @IBAction func splitBtnPressed(_ sender: Any)
+    {
+        
+        if(!split)
+        {
+            split = true
+            
+            splitView.alpha = 0
+            
+            UIView.animate(withDuration: 0.4, animations:
+            {
+                    self.splitView.alpha = 1
+            })
+        }
+        else
+        {
+            split = false
+            
+            UIView.animate(withDuration: 0.4, animations:
+            {
+                    self.splitView.alpha = 0
+            })
+        }
+    }
+    
+    @IBAction func stepChanged(_ sender: Any)
+    {
+        splitNumLabel.text = "\(stepper.value)"
+    }
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
