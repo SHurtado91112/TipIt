@@ -61,6 +61,9 @@ class TipViewController: UIViewController
         //user default values
             let defaultGratuity = 15
             splitView.alpha = 0
+            splitBtn.layer.borderColor = UIColor.white.cgColor
+            splitBtn.layer.borderWidth = 1
+            splitBtn.layer.cornerRadius = 5
         
         //nav bar font and text color
             self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: (95/255.0), green: (198/255.0), blue: (97/255.0), alpha: 1), NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
@@ -89,7 +92,6 @@ class TipViewController: UIViewController
     override func viewDidAppear(_ animated: Bool)
     {
         //set text field with default currency identifier
-            billTextField.resignFirstResponder()
             billTextField.becomeFirstResponder()
             billTextField.placeholder = Currency.getIdentifier()
 
@@ -154,7 +156,7 @@ class TipViewController: UIViewController
         if(!split)
         {
             split = true
-            
+            splitBtn.setTitle("Not splitting anymore?", for: .normal)
             splitView.alpha = 0
             
             UIView.animate(withDuration: 0.4, animations:
@@ -165,6 +167,7 @@ class TipViewController: UIViewController
         else
         {
             split = false
+            splitBtn.setTitle("Splitting the bill?", for: .normal)
             
             UIView.animate(withDuration: 0.4, animations:
             {

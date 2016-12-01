@@ -5,6 +5,8 @@
 //  Created by Steven Hurtado on 11/30/16.
 //  Copyright © 2016 Steven Hurtado. All rights reserved.
 //
+//  Hours spent: 9 + ...
+//
 
 import UIKit
 
