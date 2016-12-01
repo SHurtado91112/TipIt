@@ -26,6 +26,8 @@ class TipViewController: UIViewController
         self.view.endEditing(true)
     }
     
+    var timer = Timer()
+    
     @IBOutlet weak var billTextField: UITextField!
     @IBOutlet weak var slider: CircularSlider!
     @IBOutlet weak var percentLabel: UILabel!
@@ -33,6 +35,9 @@ class TipViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        //user default values
+            let defaultGratuity = 15
         
         //nav bar font and text color
             self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: (95/255.0), green: (198/255.0), blue: (97/255.0), alpha: 1), NSFontAttributeName: UIFont(name: "Avenir Next", size: 20)!]
@@ -51,8 +56,10 @@ class TipViewController: UIViewController
         //set up circular slider
             slider.minimumValue = 0
             slider.maximumValue = 100
-//            slider.
+            slider.endPointValue = CGFloat(defaultGratuity)
         
+        //update tip label
+            timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updateTip), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -78,6 +85,11 @@ class TipViewController: UIViewController
         
         gradientLayer.frame = self.view.bounds
         self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func updateTip()
+    {
+        percentLabel.text = "\(slider.endPointValue)%"
     }
 
     override func didReceiveMemoryWarning()
