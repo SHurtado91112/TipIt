@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HGCircularSlider
 
 class TipViewController: UIViewController
 {
@@ -26,6 +27,8 @@ class TipViewController: UIViewController
     }
     
     @IBOutlet weak var billTextField: UITextField!
+    @IBOutlet weak var slider: CircularSlider!
+    @IBOutlet weak var percentLabel: UILabel!
     
     override func viewDidLoad()
     {
@@ -38,23 +41,18 @@ class TipViewController: UIViewController
         
     
         //gradient for background layer
-            let bottomColor = UIColor(red: (95/255.0), green: (198/255.0), blue: (97/255.0), alpha: 1)
-            let topColor = UIColor(red: (255/255.0), green: (255/255.0), blue: (255/255.0), alpha: 1)
-        
-            let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
-            let gradientLocations: [Float] = [0.0, 1.0]
-        
-            let gradientLayer: CAGradientLayer = CAGradientLayer()
-            gradientLayer.colors = gradientColors
-            gradientLayer.locations = gradientLocations as [NSNumber]?
-        
-            gradientLayer.frame = self.view.bounds
-            self.view.layer.insertSublayer(gradientLayer, at: 0)
+            setGradientLayer()
         
         //tap dismisses number pad
             let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TipViewController.dismissKeyboard))
             tap.cancelsTouchesInView = false
             self.view.addGestureRecognizer(tap)
+        
+        //set up circular slider
+            slider.minimumValue = 0
+            slider.maximumValue = 100
+//            slider.
+        
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -66,10 +64,25 @@ class TipViewController: UIViewController
 
     }
 
+    func setGradientLayer()
+    {
+        let bottomColor = UIColor(red: (95/255.0), green: (198/255.0), blue: (97/255.0), alpha: 1)
+        let topColor = UIColor(red: (255/255.0), green: (255/255.0), blue: (255/255.0), alpha: 1)
+        
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        let gradientLocations: [Float] = [0.0, 1.0]
+        
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientColors
+        gradientLayer.locations = gradientLocations as [NSNumber]?
+        
+        gradientLayer.frame = self.view.bounds
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 
