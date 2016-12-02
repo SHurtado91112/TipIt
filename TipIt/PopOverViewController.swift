@@ -10,14 +10,30 @@ import UIKit
 
 class PopOverViewController: UIViewController
 {
+    
+    let defaults = UserDefaults.standard
 
+    @IBOutlet weak var segmentedController: UISegmentedControl!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+        
+        let index = defaults.integer(forKey: "default_tip_percentage")
 
-    override func didReceiveMemoryWarning() {
+        segmentedController.selectedSegmentIndex = index
+        
+    }
+    
+    @IBAction func segmentChanged(_ sender: UISegmentedControl)
+    {
+        defaults.set(segmentedController.selectedSegmentIndex, forKey: "default_tip_percentage")
+        defaults.synchronize()
+
+    }
+    
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

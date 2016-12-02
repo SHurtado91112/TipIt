@@ -59,7 +59,22 @@ class TipViewController: UIViewController, UIPopoverPresentationControllerDelega
         super.viewDidLoad()
         
         //user default values
-            let defaultGratuity = 15
+            let defaults = UserDefaults.standard
+        
+            var defaultGratuity = defaults.integer(forKey: "default_tip_percentage")
+        
+            switch(defaultGratuity)
+            {
+            case 0:
+                defaultGratuity = 15
+            case 1:
+                defaultGratuity = 18
+            case 2:
+                defaultGratuity = 20
+            default:
+                break;
+            }
+        
             splitView.alpha = 0
             splitBtn.layer.borderColor = UIColor.white.cgColor
             splitBtn.layer.borderWidth = 1
@@ -202,7 +217,7 @@ class TipViewController: UIViewController, UIPopoverPresentationControllerDelega
         {
             let vc = segue.destination as! PopOverViewController
             
-            vc.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 100)
+            vc.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 50)
             
             let contr = vc.popoverPresentationController
             
