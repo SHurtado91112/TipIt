@@ -108,7 +108,7 @@ class TipViewController: UIViewController, UIPopoverPresentationControllerDelega
     {
         //set text field with default currency identifier
             billTextField.becomeFirstResponder()
-            billTextField.placeholder = Currency.getIdentifier()
+            billTextField.placeholder = "\(Currency.getIdentifier()) Bill Amount"
 
     }
 
@@ -157,11 +157,11 @@ class TipViewController: UIViewController, UIPopoverPresentationControllerDelega
         }
         else
         {
-            tipAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", 0))"
+            tipAmountLabel.text = "\(Currency.getIdentifier()) Gratuity"
             
-            totalAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", 0))"
+            totalAmountLabel.text = "\(Currency.getIdentifier()) Total"
             
-            splitTotalLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", 0))"
+            splitTotalLabel.text = "\(Currency.getIdentifier()) Split Total"
         }
     }
 
