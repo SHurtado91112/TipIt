@@ -19,7 +19,7 @@ extension Double
     }
 }
 
-class TipViewController: UIViewController
+class TipViewController: UIViewController, UIPopoverPresentationControllerDelegate
 {
     
     struct Currency
@@ -180,11 +180,38 @@ class TipViewController: UIViewController
     {
         splitNumLabel.text = "\(Int(stepper.value))"
     }
+    
+    @IBAction func popPressed(_ sender: Any)
+    {
+        self.performSegue(withIdentifier: "popSegue", sender: self)
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
     }
 
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle
+    {
+        return .none
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if(segue.identifier == "popSegue")
+        {
+            let vc = segue.destination as! PopOverViewController
+            
+            vc.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 100)
+            
+            let contr = vc.popoverPresentationController
+            
+            if(contr != nil)
+            {
+                contr?.delegate = self
+            }
+        }
+    }
 
 }
 
