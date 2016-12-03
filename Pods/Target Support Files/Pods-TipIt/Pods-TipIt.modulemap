@@ -1,0 +1,6 @@
+framework module Pods_TipIt {
+  umbrella header "Pods-TipIt-umbrella.h"
+
+  export *
+  module * { export * }
+}

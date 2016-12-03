@@ -1,0 +1,12 @@
+PODS:
+  - HGCircularSlider (1.0.2)
+
+DEPENDENCIES:
+  - HGCircularSlider (~> 1.0.1)
+
+SPEC CHECKSUMS:
+  HGCircularSlider: 70b782934c4826af56386f7bf373bd89fb424f8d
+
+PODFILE CHECKSUM: 7a69be6b6050c8565e7b96c4cc37ff15471c13af
+
+COCOAPODS: 1.1.1
