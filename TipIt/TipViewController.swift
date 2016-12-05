@@ -13,23 +13,52 @@ import Foundation
 extension Double
 {
     /// Rounds the double to decimal places value
-    func roundTo(places:Int) -> Double {
+    func roundTo(places:Int) -> Double
+    {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
     }
 }
 
-class TipViewController: UIViewController, UIPopoverPresentationControllerDelegate
+struct Currency
 {
-    
-    struct Currency
+    static func getIdentifier(forLocale locale: Locale = Locale.current) -> String
     {
-        static func getIdentifier(forLocale locale: Locale = Locale.current) -> String
-        {
-            return locale.currencySymbol!
-        }
+        return locale.currencySymbol!
     }
     
+    static func getSeparator(forLocale locale: Locale = Locale.current) -> String
+    {
+        return locale.groupingSeparator!
+    }
+    
+    static func getDec(forLocale locale: Locale = Locale.current) -> String
+    {
+        return locale.decimalSeparator!
+    }
+}
+
+struct Number
+{
+    static let withSeparator: NumberFormatter =
+    {
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = Currency.getSeparator()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+}
+
+extension Integer
+{
+    var stringWithSeparator: String
+    {
+        return Number.withSeparator.string(from: NSNumber(value: hashValue)) ?? ""
+    }
+}
+
+class TipViewController: UIViewController, UIPopoverPresentationControllerDelegate
+{
     func dismissKeyboard()
     {
         billTextField.resignFirstResponder()
@@ -141,18 +170,37 @@ class TipViewController: UIViewController, UIPopoverPresentationControllerDelega
         {
             let tip = (userValue)! * Double(perc) * 0.01
             
-            tipAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", tip))"
+            var wholeNum = Int(tip).stringWithSeparator
             
+            var decSub = String(format: "%.2f", Float(tip.truncatingRemainder(dividingBy: 1))).index(String(format: "%.2f", Float(tip.truncatingRemainder(dividingBy: 1))).startIndex, offsetBy: 2)
+            
+            var decimalPortion = String(format: "%.2f", Float(tip.truncatingRemainder(dividingBy: 1))).substring(from: decSub)
+            
+            tipAmountLabel.text = "\(Currency.getIdentifier()) \(String(wholeNum)!)\(Currency.getDec())\(decimalPortion)"
+        
             let total = (userValue)! + tip
-            totalAmountLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", total))"
+            
+            wholeNum = Int(total).stringWithSeparator
+            
+            decSub = String(format: "%.2f", Float(total.truncatingRemainder(dividingBy: 1))).index(String(format: "%.2f", Float(total.truncatingRemainder(dividingBy: 1))).startIndex, offsetBy: 2)
+            
+            decimalPortion = String(format: "%.2f", Float(total.truncatingRemainder(dividingBy: 1))).substring(from: decSub)
+            
+            totalAmountLabel.text = "\(Currency.getIdentifier()) \(String(wholeNum)!)\(Currency.getDec())\(decimalPortion)"
             
             if(split)
             {
                 let splitNum = Double(splitNumLabel.text!)
                 
                 let splitTotal = total/splitNum!
+
+                wholeNum = Int(splitTotal).stringWithSeparator
                 
-                splitTotalLabel.text = "\(Currency.getIdentifier()) \(String(format: "%.2f", splitTotal))"
+                decSub = String(format: "%.2f", Float(splitTotal.truncatingRemainder(dividingBy: 1))).index(String(format: "%.2f", Float(splitTotal.truncatingRemainder(dividingBy: 1))).startIndex, offsetBy: 2)
+                
+                decimalPortion = String(format: "%.2f", Float(splitTotal.truncatingRemainder(dividingBy: 1))).substring(from: decSub)
+                
+                splitTotalLabel.text = "\(Currency.getIdentifier()) \(String(wholeNum)!)\(Currency.getDec())\(decimalPortion)"
             }
         }
         else
