@@ -22,7 +22,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [X] Circular Slider for the tip percentage
+- [X] HG Circular Slider for the tip percentage, via cocoapods
 - [X] Stepper for splitting the bill
 - [X] Rather than an entire new view, a pop over used for the default tip setting
 - [X] Custom splash screen: random opening comment on "Tipping" at start up
