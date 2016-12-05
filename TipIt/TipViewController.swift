@@ -130,7 +130,7 @@ class TipViewController: UIViewController, UIPopoverPresentationControllerDelega
         
         //update tip label
             percentLabel.textColor = UIColor.white
-            timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updateTip), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updateTip), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -160,6 +160,7 @@ class TipViewController: UIViewController, UIPopoverPresentationControllerDelega
     func updateTip()
     {
         var userValue = Double(billTextField.text!)
+        
         userValue = userValue?.roundTo(places: 2)
         
         perc = Int(round(slider.endPointValue))
