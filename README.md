@@ -1,5 +1,7 @@
 # Pre-work - Tip It
 
+![icon-app-76x76 2x](https://cloud.githubusercontent.com/assets/11231583/20907493/8d0b98a0-bb1c-11e6-9a17-1ad865833b2a.png) 
+
 **Tip It** is a tip calculator application for iOS.
 
 Submitted by: **Steven Hurtado**
